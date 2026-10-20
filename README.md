@@ -1,6 +1,6 @@
-# SOC L1 Simulation
+# :desktop_computer: SOC L1 Simulation
 
-<h1>Scenario and activity description</h1>
+<h1>:jigsaw: Scenario and activity description</h1>
 <br />
 <p>
 Alerts triage and investigation as a SOC L1 analyst using TryHackMe SOC simulator platform. 
@@ -9,17 +9,17 @@ Alerts triage and investigation as a SOC L1 analyst using TryHackMe SOC simulato
 <br />
 
 
-<h1>Tools</h1>
+<h1>:hammer_and_wrench: Tools</h1>
 <br />
 
 <ul>
   <li>Microsoft Defender Advanced Hunting</li>
-  <li>TryDetectThis a tool that simulates open source inteliggence regardi IPs, URLs, domains and also files</li>
+  <li>TryDetectThis a tool that simulates open source intelligence regarding IPs, URLs, domains and also files</li>
 </ul>
 
 <br />
 
-<h1>Alert</h1>
+<h1>:heavy_exclamation_mark: Alert</h1>
 <br />
 
 <p>The activity begins by analyzing an alert regarding a phishing e-mail</p>
@@ -40,7 +40,7 @@ Alerts triage and investigation as a SOC L1 analyst using TryHackMe SOC simulato
 <br />
 <br />
 
-<h1>Triaging and investigation</h1>
+<h1>:detective: Triaging and investigation</h1>
 <br />
 <br />
 
@@ -61,12 +61,12 @@ Note: in the simulation no link is provided so i can't investigate it.
 <br />
 
 <p>
-Note: in the table used for this exercies the TimeGenerated field has the same value for all the events since this is a simulation and all logs have been generated at the same time, so it can't be used to filter time. And since timestamp_s uses a string value i had to use the todatetime() function.</p>
+Note: since this is a simulation, in the table used for this exercies the TimeGenerated field has the same value for all the events and all logs have been generated at the same time, so it can't be used to filter time. And since timestamp_s uses a string value i had to use the todatetime() function.</p>
 
 <p>
 As we can see from the query output there is a lot of activity by process "spoolsv.exe" that is usually a legitimate windows service used for printers
 
-There is also a DNS query made by OUTLOOK.EXE for ip  34.244.197.202, which is a legitimate private ip assigned to domain mail.tryhatme.finance
+There is also a DNS query made by OUTLOOK.EXE for ip  "34.244.197.202", which is a legitimate private ip assigned to domain "mail.tryhatme.finance"
 
 At this point i decided to get back to the alert queue and I noticed that there is another possible phishing e-mail using the same domain as the first one. So i checked the events using only the domain "@fashionindustrytrends.xyz".
 </p>
@@ -74,7 +74,7 @@ At this point i decided to get back to the alert queue and I noticed that there 
 <img width="1477" height="638" alt="Phshing 4" src="https://github.com/user-attachments/assets/7f06a106-6ce5-4fc0-84d3-3aa5d05ce155" />
 <br />
 
-<p>Three e-mails from the same domain were sent to 2 other users beside from "Yani Zubair". So i did the same check on their machine to see events right after the e-mail was received.</p>
+<p>Three e-mails from the same domain were sent to 2 other users beside from "Yani Zubair". So i did the same check on their machine to see events right after the e-mails were received.</p>
 <br />
 <img width="1453" height="580" alt="Phishing 5" src="https://github.com/user-attachments/assets/1045531a-e4b4-4345-a79b-cda808a4d88d" />
 <br />
@@ -82,20 +82,27 @@ At this point i decided to get back to the alert queue and I noticed that there 
 <br />
 
 <p>
-  On this two machines there are less events and all seeems legitimate.
+  On this two machines there are less events and all seems legitimate.
 </p>
 
 <br />
 
-<h1>Investigation report</h1>
+<h1>:triangular_flag_on_post: Investigation report</h1>
 
 <br />
 
-<p>By reviewing the alert queue there are 5 alerts that are part of this investigation:
+<p>
+  Time of activity: 10/20/2026 09:48:37.811 - 10/20/2026 10:20:22.811
+  
+  By reviewing the alert queue there are 5 alerts that are part of this investigation:
   <ul>
 <li>3 phishing e-mail alerts triggered all by the same domain "@fashionindustrytrends.xyz"</li>
 <li>2 process alerts triggered on "win-3453" and "win-3449"</li>
   </ul>
+  <br />
+  <img width="1490" height="404" alt="ALERTS INVESTIGATION PHISHING" src="https://github.com/user-attachments/assets/61cb8601-44f9-4967-a182-627a011fb968" />
+
+  <br />
 The affected entities in total are :
 <ul>
   <li>win-3449 (Yani Zubair)</li>
@@ -109,15 +116,18 @@ The process alerts  have been triggered by:
   <li>TrustedInstaller.exe (linked to Windows Modules installer service)</li>
   <li>rdpclip.exe (is the native Windows process responsible for managing the clipboard  between a local machine and a remote computer during a Remote Desktop session and also it was run from    "C:\Windows\System32\rdpclip.exe" which is the legitimate path from where it should be executed)</li>
 </ul>
+<br />
 
-Regarding the other processes that didn't trigger an alert and that we saw in the events right after the e-mails were received, they all are legitimate processes as well, beside from the last one that maybe needs an escalation and a deeper investigation:
--AtBroker.exe
--spoolsv.ex
--sethc.exe
--OUTLOOK.EXE that made some queries towards a private legitimate ip 
-mail.tryhatme.finance, 34.244.197.202
--iexplore.exe with command line "C:\Program Files\Internet Explorer\iexplore.exe" -startmanager -Embedding
+Regarding other processes that didn't trigger an alert and that we saw in the events right after the e-mails were received, they all are legitimate processes as well, beside from the last one that maybe needs an a deeper investigation (the simulation doesn't provide other infos):
+<ul>
+<li>"AtBroker.exe": is a legitimate Microsoft Windows executable file designed to manage assistive technologies</li>
+<li>"spoolsv.exe": a legitimate Microsoft Windows system process responsible for managing all print and fax jobs</li>
+<li>"sethc.exe":  a legitimate system executable file that manages the accessibility shortcut for sticky keys</li>
+<li>"OUTLOOK.EXE" that made some queries towards a private legitimate ip and domain "mail.tryhatme.finance", "34.244.197.202"</li>
+<li>"iexplore.exe" with command line "C:\Program Files\Internet Explorer\iexplore.exe" -startmanager -Embedding: the command it's safe but Internet Explorer is retired so we must gather more info about the machine and OS running on it and why there still is this browser.</li>
+</ul>
 
+<br />
 In conclusion the e-mails might be actual phishing but it seems that none of the users that received them clicked on the links inside, i would apply a remediation action by blocking that domain. I still wouldn't recommend an escalation to L2 yet just because more investigation should be done about the link inside the e-mails and that last process, then based on the results i might escalate it.
 
 </p>
